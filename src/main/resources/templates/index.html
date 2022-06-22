@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+
+<html class="no-js"  xmlns:th="http://www.thymeleaf.org"> 
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Project-Tourism</title>
+	
+
+  
+ 
+
+	
+
+	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'> -->
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" th:href="@{/front/css/animate.css}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" th:href="@{/front/css/icomoon.css}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" th:href="@{/front/css/bootstrap.css}">
+	<!-- Superfish -->
+	<link rel="stylesheet" th:href="@{/front/css/superfish.css}">
+
+	<link rel="stylesheet" th:href="@{/front/css/style.css}">
+
+
+	<!-- Modernizr JS -->
+	<script th:src="@{/front/js/modernizr-2.6.2.min.js}"></script>
+
+
+	</head>
+	<body>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<div id="fh5co-header">
+			<header id="fh5co-header-section">
+				<div class="container">
+					<div class="nav-header">
+						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+						<h1 id="fh5co-logo"><a href="#home">Tourism</a></h1>
+						<!-- START #fh5co-menu-wrap -->
+						<nav id="fh5co-menu-wrap" role="navigation">
+							<ul class="sf-menu" id="fh5co-primary-menu">
+								<li class="active">
+									<a href="">Home</a>
+								</li>
+								<li class="active">
+									<a th:href="@{/allDestination}">Destinations</a>
+								</li>
+								<li class="active">
+									<a th:href="@{/allEvents}">Events</a>
+								</li>
+								<li sec:authorize="isAuthenticated()" class="active">
+									<a th:href="@{/viewTickets}">MyBookings</a>
+								</li>
+							
+								
+
+<li sec:authorize="hasAnyAuthority('admin')" class="active"><a th:href="@{/admin}"> Admin Panel</a></li>
+
+
+								
+							
+								
+                                  <li class="active" sec:authorize="isAuthenticated()"><a th:href="@{logout}">Logout</a></li>
+								
+                                 <li class="active" sec:authorize="isAnonymous()"><a th:href="@{login}">Login
+                                 </a></li>
+                                
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+			
+		</div>
+		
+		
+		<div class="fh5co-hero">
+			<div class="fh5co-overlay"></div>
+			<div class="fh5co-cover text-center" data-stellar-background-ratio="0.5" style="background-image: url(/front/images/cover_bg_2.jpg);">
+				<div class="desc animate-box">
+					<h2 id="home">Travel Around The World</h2>
+					
+					<span><a class="btn btn-primary btn-lg" href="#events">Get Started</a></span>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="fh5co-listing" id="events">
+			<div class="container">
+				<div class="row" >
+					<div class="col-md-4 col-sm-4 fh5co-item-wrap" th:each="destination,destinationStat: ${listDestination}" th:unless="${destinationStat.index > 5}" >
+						<a class="fh5co-listing-item" th:href="@{/details/{id}(id=${destination.id})}">
+							<img th:src="@{/uploads/{file}(file=${destination.fileName})}" style=" min-height:330px ; min-width: 290px;" alt="image" class="img-responsive">
+							<div class="fh5co-listing-copy">
+								<h2 th:text="${destination.Name}">Paris</h2>
+								<!--<p th:text="${destination.description}"> Beautiful Place</p>-->
+								<span class="icon">
+									<i class="icon-chevron-right" ></i>
+								</span>
+							</div>
+						</a>
+					</div>
+					
+					<!-- END 3 row -->
+
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="fh5co-section">
+			<div class="container">
+			<h3>News</h3>
+				<div class="row" th:each="events,eventsStat: ${listEvents}" th:unless="${eventsStat.index > 3}">
+					<div class="col-md-6 fh5co-news" >
+						
+						<ul>
+							<li>
+								<a th:href="@{details/eventDetails/{id}(id=${events.id})}">
+									<span class="fh5co-date" th:text="${events.duration}">Sep. 10, 2016</span>
+									<h3 th:text="${events.Name}">Newly done ndon</h3>
+									<p  th:text="${#strings.abbreviate(events.description,150)}"> Lorem ipsum dolor shenderit!</p>
+									<p  th:text="${events.destination.name}"> Lorem ipsum dolor shenderit!</p>
+									
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+					<div class="col-md-6 fh5co-testimonial">
+						<img th:src="@{/uploads/{file}(file=${events.fileName})}" style=" max-height:270px ; min-width: 290px;" alt="" class="img-responsive mb20">
+						
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+							<p><br>Made with <i class="icon-heart3"></i> by <a href="" target="">Vignesh</a> </p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script th:src="@{/front/js/jquery.min.js}"></script>
+	<!-- jQuery Easing -->
+	<script th:src="@{/front/js/jquery.easing.1.3.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/front/js/bootstrap.min.js}"></script>
+	<!-- Waypoints -->
+	<script th:src="@{/front/js/jquery.waypoints.min.js}"></script>
+	<!-- Stellar -->
+	<script th:src="@{/front/js/jquery.stellar.min.js}"></script>
+	<!-- Superfish -->
+	<script th:src="@{/front/js/hoverIntent.js}"></script>
+	<script th:src="@{/front/js/superfish.js}"></script>
+
+	<!-- Main JS -->
+	<script th:src="@{/front/js/main.js}"></script>
+
+	</body>
+</html>
+
